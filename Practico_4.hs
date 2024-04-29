@@ -30,7 +30,7 @@ hd (x:xs) = x
 --3
 f :: Int -> Int -> Int
 f x 0 = x
-f x (n+1) = cuadrado (f x n)
+f x n = cuadrado (f x (n-1))
 
 -- Resolver Aplicativa y Normal para [f 2 3]
 
@@ -54,13 +54,16 @@ f x (n+1) = cuadrado (f x n)
 -- cuadrado (f 2 2)
 -- (f 2 2) * (f 2 2)
 -- cuadrado (f 2 1) * (f 2 2)
--- ( (f 2 0) * (f 2 0) ) * (f 2 2)
--- ( (f 2 0) * (f 2 0) ) * cuadrado (f 2 1)
--- ( (f 2 0) * (f 2 0) ) * ( (f 2 0) * (f 2 0) )
--- ( 2 * 2 ) * ( (f 2 0) * (f 2 0) )
--- 4 * (2 * 2)
--- 4 * 4
--- 16 
+-- ( cuadrado (f 2 0) * cuadrado (f 2 0) ) * (f 2 2)
+-- ( cuadrado (f 2 0) * cuadrado (f 2 0) ) * cuadrado (f 2 1)
+-- ( cuadrado (f 2 0) * cuadrado (f 2 0) ) * ( cuadrado (f 2 0) * cuadrado (f 2 0) )
+-- ( (2 * 2) * (2 * 2) ) * ( ( cuadrado (f 2 0) * cuadrado (f 2 0) )
+-- (4 * 4) * ( ( cuadrado (f 2 0) * cuadrado (f 2 0) )
+-- 16 * ( (cuadrado (f 2 0) * cuadrado (f 2 0) )
+-- 16 * ( (2 * 2) * (2 * 2))
+-- 16 * (4 * 4)
+-- 16 * 16
+-- 256
 
 
 
