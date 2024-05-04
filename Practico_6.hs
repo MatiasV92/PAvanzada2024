@@ -24,6 +24,7 @@ intToNat n = Succ (intToNat (n-1))
 
 instance Num Nat where
     (+) x y = sumNat x y
+--seguir definiendo
 
 sumNat :: Nat -> Nat -> Nat
 sumNat Zero Zero = Zero
@@ -67,7 +68,21 @@ heightBTree Nil = 0
 heightBTree (Node (hi) r (hd)) = 1 + max (heightBTree hi) (heightBTree hd)
 
 
+--Ej9
 
+instance Eq (BinTree a) where
+    (==) Nil Nil = True
+    (==) Nil (Node (hi) a (hd)) = False
+    (==) (Node (hi) a (hd)) Nil = False
+    (==) (Node (hia) a (hda)) (Node (hib) b (hdb)) = sizeBTree (Node (hia) a (hda)) == sizeBTree (Node (hib) b (hdb))
+
+instance Ord (BinTree a) where
+    (<=) Nil (Node (hi) a (hd)) = True
+    (<=) (Node (hi) a (hd)) Nil = False
+    (<=) (Node (hia) a (hda)) (Node (hib) b (hdb)) = sizeBTree (Node (hia) a (hda)) <= sizeBTree (Node (hib) b (hdb))
+
+--instance Show Nat where
+--show n = show (natToInt n)
 
 
 
