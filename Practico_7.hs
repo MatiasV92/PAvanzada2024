@@ -25,14 +25,14 @@ paraTodo f xs = and [ f x | x <- xs]
 
 --Ej4
 
-sumatoria :: (a -> Int) -> [Int] -> Int
+sumatoria :: (a -> Int) -> [a] -> Int
 sumatoria f xs = sum [ f x | x <- xs]
 
-contaroria :: (a -> Int) -> [a] -> Int
-contaroria f xs = prod [ f x | x <- xs]
+contatoria :: (a -> Int) -> [a] -> Int
+contatoria f xs = length [ f x | x <- xs]
 
 productoria :: (a -> Int) ->[a] -> Int
-productoria f xs = [ f x | x <- xs]
+productoria f xs = product[ f x | x <- xs]
 
 
 
