@@ -1,0 +1,135 @@
+{--
+--
+
+--Ej 1
+
+--f una funcion que determina si los elementos de xs son
+--todos iguales
+
+f1_0.xs = < paratodo x.i : 0 <= i < (#xs - 1) : x.i == x.(i+1) >
+f1_1.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < #xs : x.i == x.j > >
+
+--f es una funcion ue determina si los elementos de una lista
+--xs son todos diferentes
+
+f2.xs = < paratodo x_i : 0 <= i < (#xs - 1) : x_i /= x_(i+1) >
+
+--f es una funcion que detemina si los elementos  de una lista
+--xs estan ordenados
+
+f3.xs = < paratodo x.i : 0 <= i <= (#xs) : x.i < x.(i+1) >
+
+--P es un predicado que es True sii cuando aparece 1 es xs
+--entonces debe aparecer 0 en xs
+
+f.xs = < existe x.i : 0 <= i < (#xs) : x.i == 1 > ^ < existe x.i : 0 <= i < (#xs) : x.i == 0  > 
+
+--p es el producto de todos los elementos primos de xs
+-- esPrimo :: [a] -> [a]
+
+f.xs = < productoria i : 0 <= i < (#xs) : esPrimo xs.i >
+
+--Ej2
+
+--n es el menor entero tal que xs.n = True
+
+f.xs = < existe x.n : 0 <= n < #xs ^ xs.i = True : i >
+
+f.xs = < existe x.n : 0 <= n < (#xs - 1) : x.n < x.(n+1) >
+
+--n es el ultimo elemento de xs tal que xs.n = True
+
+f.xs = < existe x.i : 0 <= i < (#xs) : x.n == x.(#xs) >
+
+--f es una funcion que devuelve True si y solo si todos
+--los elementos de xs son equivalentes
+
+f.xs = < paraTodo x.i : 0 <= i < (#xs) : xs.i = True >
+
+f.xs = < paraTodo x.i : 0 <= i < (#xs-1) : x_i == x_(i+1) >
+
+--Ej3
+
+--f.xs determina si xs tiene la misma cantidad de pares que impares
+
+f.xs = < contaroria x.(i,j) : 0 <= i < #xs , 1 <= j < #xs : i == j >
+
+--f.n determina si n es primo
+
+f.n = < existe x.j : 1 < j < n : mod n j == 0 >
+
+--f.xs.ys determina si ys es una subsecuencia de xs
+
+f.xs.ys = < existe as,bs : : xs = as ++ ys ++ bs >
+
+--f.xs.ys determina si ys es una subsecuencia final de xs
+
+f.xs.ys = < existe as : : xs = as ++ ys >
+
+--Ej4
+
+--1
+
+sum.xs < sumatoria i : 0 <= i < (#xs) : xs.i >
+
+f.xs = < min as, bs, cs : xs = as ++ bs ++ cs : sum.bs > 
+
+--2
+
+maxigual.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (#bs-1) : i == (i+1) > : length.bs >
+
+--3
+
+maxdistinto.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (#bs-1) : i == (i+1) > : length.bs > 
+
+--
+--}
+
+--Ej5
+
+-- Funciones Auxiliares
+
+existe :: (a -> Bool) ->[a] -> Bool
+existe f xs = or [ f x | x <- xs]
+
+paraTodo :: (a -> Bool) ->[a] -> Bool
+paraTodo f xs = and [ f x | x <- xs]
+
+lstDivs :: Int -> [Int]
+lstDivs n = [ x | x <- [1..n], mod n x == 0]
+
+esPrimo :: Int -> Bool
+esPrimo n |length (lstDivs n) == 2 = True
+          |otherwise = False 
+
+lstPrimos :: Int -> [Int]
+lstPrimos n = [ x | x <- [0..n] , esPrimo x == True]
+
+productoria :: (a -> Int) ->[a] -> Int
+productoria f xs = product[ f x | x <- xs]
+
+split2 :: [a] -> [([a],[a])]
+split2 xs = [ (take i xs , drop i xs) | i <- [0..length xs] ] 
+
+sumaSeg :: [Int] -> Int
+sumaSeg xs = sum [ sum (take i xs) | i <- [0..length xs] ]
+
+---
+--a)
+
+allPrimesProd :: [Int] -> Int
+allPrimesProd xs = productoria (*1) [ x | x <- (lstPrimos (length xs)) ]
+
+--b)
+
+esSubSec :: Eq a => [a] -> [a] -> Bool
+esSubSec xs ys = or [  x == y | x <- split2 xs , y <- split2 ys]
+
+
+
+
+
+
+
+
+
