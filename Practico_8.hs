@@ -7,7 +7,7 @@
 --todos iguales
 
 f1_0.xs = < paratodo x.i : 0 <= i < (#xs - 1) : x.i == x.(i+1) >
-f1_1.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < #xs : x.i == x.j > >
+iguales.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < #xs : x.i == x.j > >
 
 --f es una funcion ue determina si los elementos de una lista
 --xs son todos diferentes
@@ -33,32 +33,34 @@ f.xs = < productoria i : 0 <= i < (#xs) : esPrimo xs.i >
 
 --n es el menor entero tal que xs.n = True
 
-f.xs = < existe x.n : 0 <= n < #xs ^ xs.i = True : i >
+f:[Bool] -> Nat
 
-f.xs = < existe x.n : 0 <= n < (#xs - 1) : x.n < x.(n+1) >
+f.xs = < Min i : 0 <= n < #xs ^ xs.i : i >
 
 --n es el ultimo elemento de xs tal que xs.n = True
 
-f.xs = < existe x.i : 0 <= i < (#xs) : x.n == x.(#xs) >
+f:[Bool] -> Nat
+
+f.xs = < Max i : 0 <= i < (#xs) ^ xs.i = True : i >
 
 --f es una funcion que devuelve True si y solo si todos
 --los elementos de xs son equivalentes
 
 f.xs = < paraTodo x.i : 0 <= i < (#xs) : xs.i = True >
 
-f.xs = < paraTodo x.i : 0 <= i < (#xs-1) : x_i == x_(i+1) >
-
 --Ej3
 
 --f.xs determina si xs tiene la misma cantidad de pares que impares
 
-f.xs = < contaroria x.(i,j) : 0 <= i < #xs , 1 <= j < #xs : i == j >
+f.xs = < contaroria x.i : 0 <= i < #xs : esPar.(xs.i) > = < contaroria x.i : 0 <= i < #xs : esPar.(xs.i) >
 
 --f.n determina si n es primo
 
 f.n = < existe x.j : 1 < j < n : mod n j == 0 >
 
 --f.xs.ys determina si ys es una subsecuencia de xs
+
+f: [a] -> Bool
 
 f.xs.ys = < existe as,bs : : xs = as ++ ys ++ bs >
 
@@ -75,6 +77,10 @@ sum.xs < sumatoria i : 0 <= i < (#xs) : xs.i >
 f.xs = < min as, bs, cs : xs = as ++ bs ++ cs : sum.bs > 
 
 --2
+
+iguales.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < #xs : x.i == x.j > >
+
+maxigual.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ iguales.bs : length.bs >
 
 maxigual.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (#bs-1) : i == (i+1) > : length.bs >
 
