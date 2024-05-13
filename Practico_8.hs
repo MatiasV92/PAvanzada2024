@@ -12,7 +12,7 @@ iguales.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < 
 --f es una funcion ue determina si los elementos de una lista
 --xs son todos diferentes
 
-f2.xs = < paratodo x_i : 0 <= i < (#xs - 1) : x_i /= x_(i+1) >
+diferentes.xs = < paratodo x_i : 0 <= i < (#xs - 1) : x_i /= x_(i+1) >
 
 --f es una funcion que detemina si los elementos  de una lista
 --xs estan ordenados
@@ -86,7 +86,11 @@ maxigual.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (
 
 --3
 
-maxdistinto.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (#bs-1) : i == (i+1) > : length.bs > 
+diferentes.xs = < paratodo x_i : 0 <= i < (#xs - 1) : x_i /= x_(i+1) >
+
+maxdistinto.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ diferentes.bs  : length.bs > 
+
+maxdistinto.xs = < max as, bs, cs : xs = as ++ bs ++ cs ^ < paraTodo i : 0 <= i < (#bs-1) : i == (i+1) > : length.bs >
 
 --
 --}
@@ -117,6 +121,9 @@ productoria f xs = product[ f x | x <- xs]
 split2 :: [a] -> [([a],[a])]
 split2 xs = [ (take i xs , drop i xs) | i <- [0..length xs] ] 
 
+split3 :: [a] -> [([a],[a],[a])]
+split3 xs = or [ (as,bs,cs) | (as,ys) <- split2 xs , (bs,cs) <- split2 ys]
+
 sumaSeg :: [Int] -> Int
 sumaSeg xs = sum [ sum (take i xs) | i <- [0..length xs] ]
 
@@ -125,6 +132,8 @@ sumaSeg xs = sum [ sum (take i xs) | i <- [0..length xs] ]
 
 allPrimesProd :: [Int] -> Int
 allPrimesProd xs = productoria (*1) [ x | x <- (lstPrimos (length xs)) ]
+
+--allPrimesProd xs = product [ xs!!i | i <-[0..length (xs-1)] , esPrimo (xs!!i)]
 
 --b)
 
