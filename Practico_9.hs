@@ -131,7 +131,7 @@ reversa (reversa (x:xs))
 	reversa (x : reversa xs)
 
 
-= {Def Reverse ,ys =reversa xs}
+= {Def Reverse ,ys = reversa xs}
 
 	reversa (ys) ++ [x]
 
@@ -154,6 +154,7 @@ iguales.xs = < paratodo x.i : 0 <= i < (#xs) : xs.0 == xs.i >
 Caso Base xs = []
 
 	< paratodo x.i : 0 <= i < (#[]) : [].0 == [].i >
+
 = {Def Cardinal #}
 	
 	< paratodo x.i : 0 <= i < 0 : x.0 == x.i >
@@ -175,7 +176,7 @@ Caso Inductivo  (x.xs)
 
 ={Particion de Rango}
 
-	< paratodo i : 0 <= i < (#xs) : xs.0 == xs.i > and < paratodo x.i : 0 <= i < (#xs) : xs.0 == xs.i >
+	< paratodo i : i = 0 : xs.0 == xs.i > and < paratodo x.i : 0 <= i < (#xs) : xs.0 == xs.i >
 
 -- !!!!!!!!!!!! SE DEBE MODULALRIZAR ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 
@@ -185,7 +186,7 @@ g.n.xs = < paratodo x.i : 0 <= i < (#xs) : n == xs.i >
 
 	< paratodo i : 0 <= i < #[] : n == [].i >
 
-= {Rango Vacio [ #[] = 0 ]}
+= {Rango Vacio #[] = 0 ]}
 
 	< paratodo i : : n == [].i >
  
@@ -232,10 +233,315 @@ f. (x:xs) = g.x.xs
 
 g:: a -> [a] -> Bool
 g.n.[] = True
-g.n.xs = (n = x) and g.n..xs
+g.n.xs = (n = x) and g.n.xs
 
 
 --Ej 4
+
+f:: [a] ->Int
+f.[] = 0
+f.(x:xs) = productoria (x:xs)
+
+f.xs = < productoria i : 0 <= i < (#xs) : xs.i >
+
+Caso Base xs =[]
+
+< productoria i : 0 <= i < [] : [].i >
+
+={Rango Vacio #[] = 0 ]}
+
+	< productoria i : 0 : [].i >
+
+={Neutro Productoria}
+
+	0
+
+HI = < productoria i : 0 <= i < (#xs) : xs.i >
+Caso Inductivo = (x.xs)
+
+< productoria i : 0 <= i < #(x:xs) : (x:xs).i >
+
+={Separacion de un Termino}
+
+	(x = x.0) * < productoria i : 0 <= i < #(x:xs) : (x:xs).i+1 >
+
+={Prop. Indexacion}
+
+	(x = x.0) * < productoria i : 0 <= i < #xs : xs.i >
+
+={HI}
+
+	x = x.0 * f.xs	
+
+--Ej5
+
+	!!! HACER ¡¡¡
+
+--Ej6
+
+m :[Num] -> [Num]
+m [] = 0
+m (x:xs) = 
+
+<Min i : 0 <= i < #xs : xs.i >
+
+Caso Base xs = []
+
+<Min i : 0 <= i < #[] : [].i >
+
+={Rango Vacio}
+
+<Min i : i = 0 : [].i >
+
+=
+	0
+
+HI = <Min i : 0 <= i < #xs : xs.i >
+Caso Base (x:xs)
+
+< Min i : 0 <= i < #(x:xs) : (x:xs).i >
+
+= {Separación de un Termino}
+
+	x = x.0 Min	<Min i : 0 <= i < #(x:xs) : (x:xs).i+1 >
+
+= {Def Indexacion}
+
+	x = x.0 Min	<Min i : 0 <= i < #(xs) : (xs).i >
+
+= {HI}
+
+	x x = x.0 Min f.xs
+
+--Ej7
+
+Escificacion
+
+fx.xs = {Existe i : 0 =< i < #xs : sum.xs - xs.i = xs.i}
+
+Caso Base (xs = [])
+
+fx.xs = {Existe i : 0 =< i < #[] : sum.[] - [].i = [].i}
+
+= {Rango Vacio}
+
+False
+
+HI = {Existe i : 0 =< i < #xs : sum.xs - xs.i = xs.i}
+Caso Inducivo (x:xs)
+
+{--
+	Separacion de un término  (Pagina 111)
+
+		< (Operador) i : 0 =< i < #n+1 : T.i>
+		T.0 [(Operdaror)] < (Operador) i : 0 =< i < #n+1 : T.(i+1)>
+	
+	Ej (+)
+		<+i:0<=i<#(x:xs):T.i>
+		T.0 + <+i:0<=i<#xs:T.(i+1)>
+
+	Def Sum
+		sum [] = 0
+		sum (x:xs) = x + sum xs
+--}
+
+f.(x:xs) = {Existe i : 0 =< i < #(x:xs) : sum.(x:xs) - (x:xs).i = (x:xs).i}
+
+= {Separación de termino, def Sum , Aritmtica}
+
+	x + sum xs - x = x or {Existe i : 0 =< i < #(xs) : x + sum.(xs) - (x:xs).i+1 = (x:xs).i+1}
+
+= {Aritmetica, Def Index}
+
+	sum xs = x or {Existe i : 0 =< i < #(xs) : x+sum.(xs) - (xs).i = (xs).i}
+
+=GENERALIZACION
+
+	g.n.xs = {Existe i : 0 =< i < #(xs) : n + sum.(xs) - (xs).i = (xs).i}
+
+	Caso Base xs = []
+
+		g.n.[] = {Existe i : 0 =< i < #[] : n + sum.[] - [].i = [].i}
+
+	={Rango Vacio}
+
+		False
+
+	HI = {Existe i : 0 =< i < #(xs) : n + sum.(xs) - (xs).i = (xs).i}
+	Caso Inductivo = (x:xs)
+
+		g.n.xs = {Existe i : 0 =< i < #(x:xs) : n + sum.(x:xs) - (x:xs).i = (x:xs).i}
+
+		={Separacion Termino}
+
+			n + x + sum xs - x = x or {Existe i : 0 =< i < #(xs) : n + x + sum.(xs) - (xs).i+1 = (x:xs).i+1}
+
+		={Aritmetica,  Def Index}
+
+			(n + sum xs = x) or {Existe i : 0 =< i < #(xs) : (n + x) + sum.(xs) - (xs).i = (xs).i}
+
+		={Asociatividad -> n' = (n+x)}
+
+			(n + sum xs = x) or {Existe i : 0 =< i < #(xs) : (n') + sum.(xs) - (xs).i = (xs).i}
+		
+		={ HI }
+			
+			n + sum xs = x or g.(n').xs
+
+=FIN GENERALIZACION
+
+
+Luego f.xs = g.0.xs
+
+Para resolver f (que es un caso particular) , es necesario inicializar g.n.xs con n = 0
+
+--Ej8
+
+	f.x :: Nat -> Bool
+
+	Nat = Min x
+
+	Induccion por Casos
+
+--Ej9
+
+Derivar
+	
+	P.xs.ys = < ∃ as, bs :: ys = as ++ xs ++ bs >
+
+-- Primero 
+	
+	P.xs.ys = < ∃ as :: xs = ys ++ as >
+
+	Caso Base ys = []
+
+	< ∃ as :: xs = ys ++ as >
+
+=
+
+	< ∃ as :: xs = [] ++ as >
+
+={ Def Concat }
+
+	< ∃ as :: xs = as >
+
+={Intercambio de Rango}
+
+	< ∃ as : xs = as : True >
+
+={ Termino constante or Rango vacio}
+
+	True
+
+--Segundo 
+
+< ∃ as :: (y:ys) = [] ++ as >
+
+={Def ++}
+
+	< ∃ as :: (y:ys) = as >
+
+={Intercambio}
+
+	< ∃ as : (y:ys) = as :: True >
+
+= {Rango Unitario}
+
+	True
+
+--LUEGO
+
+Cuando ys /= []
+
+1. xs = []
+or
+2. xs /= [] -> (x:xs)
+
+ P.[].(y.ys)
+
+1.
+ 	< ∃ as :: [] = (y:ys) ++ as >
+={Iguadad de listas}
+ 	< ∃ as :: [] = (y:ys) and [] = (as) >
+={LogicaIntercambio entre R y T}
+ 	< ∃ as :: False and [] = (as) >
+={Intercambio entre R y T}
+	< ∃ as : False : True >
+
+2.
+	< ∃ as :: (x:xs) = (y:ys) ++ as >
+={Def ++}
+	< ∃ as :: (x:xs) =  y : (ys ++ as) >
+={Igualdad de Listas}
+	< ∃ as :: x = y and  xs =ys++ as >
+={Dist and, or Existe}
+	x = y and < ∃ as :: xs =ys++ as >
+= {HI}
+	x = y  and p.xs.ys
+
+
+--Ej 10 (Tupling)
+
+Sum xs = <Sumatoria i : 0 =< i < #xs : xs.i>
+
+
+
+Prom xs = (sum xs, long xs) --HI--
+Caso Base xs = []
+
+	(sum [], long [])
+
+={Def sum  long}
+
+	(0,0)
+
+Caso Inductivo (x:xs)
+
+Prom (x:xs) = (sum (x:xs), long (x:xs))
+	
+	o
+
+Prom (x:xs) = (sum (x:xs), #(x:xs))
+
+={Def Sum, Long}
+
+	(x + sum (xs), 1 + long (xs))
+
+={Introduccion a y b}
+
+	(x + a, 1 + b)
+
+	[[ a = sum xs , b = long xs ]]
+	[[(a, b) = (sum xs ,long xs) ]]
+
+= HI
+
+	(sum xs, long xs)
+
+Hasell
+
+promTupla :: [Int] -> (Int, Int)
+promTupla [] = (0, 0)
+promTupla (x:xs) = (x+a , 1+b)
+					where (a,b) = promTupla xs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
