@@ -6,7 +6,8 @@
 --f una funcion que determina si los elementos de xs son
 --todos iguales
 
-f1_0.xs = < paratodo x.i : 0 <= i < (#xs - 1) : x.i == x.(i+1) >
+f1_0.xs = < paratodo x.i : 0 <= i < (#xs) : x.0 == x.i >
+
 iguales.xs = < paratodo x.i : 0 <= i < (#xs - 1) : < paratodo x.j : (i+1) < j < #xs : x.i == x.j > >
 
 --f es una funcion ue determina si los elementos de una lista

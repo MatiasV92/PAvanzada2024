@@ -1,5 +1,52 @@
 --PRACTICO 9
 
+--Ej1
+
+f.xs:[a] -> [a]
+
+(xs ++ ys) ++ zs = xs ++ (ys ++ zs)
+
+Parto de (xs ++ ys) ++ zs
+
+={Def ++}
+
+	< ∀ xs,ys,zs :: >
+
+
+
+Caso Base xs = []
+
+([] ++ ys) ++ zs = [] ++ (ys ++ zs)
+
+={Def ++}
+
+	ys ++ zs = ys ++ zs
+=
+
+	True
+
+Caso Inductivo (x:xs)
+
+HI: (xs ++ ys) ++ zs = xs ++ (ys ++ zs)
+
+((x:xs) ++ ys) ++ zs = (x:xs) ++ (ys ++ zs)
+
+={Def ++ [(x:xs)++ys = x:(xs ++ ys)]}
+
+	(x:(xs++ys))++zs
+
+={Def ++}
+
+	x:((xs++ys)++zs)
+
+={Asociatividad ++}
+
+	x:(xs++(ys++zs))
+
+={HI}
+
+	True
+
 --Ej2
 
 {--

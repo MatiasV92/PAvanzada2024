@@ -131,7 +131,7 @@ occurEnLst xs e = length [x | x <- xs , x == e]
 split2 :: [a] -> [([a],[a])]
 split2 xs = [ (take i xs , drop i xs) | i <- [0..length xs] ] 
 
---split2 xs = [ x | x <- zip (init xs) (tail xs) ]
+
 
 --Ej 23 
 
