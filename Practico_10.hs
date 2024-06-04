@@ -86,7 +86,7 @@ Resuelvo
 P => wp.{S}.{Q}
 
 E0 -> wp (x := y - x) . {x = B ∧ y = A}
-E1 -> wp (y := x + y) .(wp (y := y - x).{x = B ∧ y = A})
+E1 -> wp (y := x + y) .(wp (x := y - x).{x = B ∧ y = A})
 E2 -> wp (x := x - y) .(wp (y := x + y ) .(wp ( x := y - x).{x = B ∧ y = A})))
 
 Resuelvo
@@ -94,9 +94,9 @@ Resuelvo
 {Q} = {x = B ∧ y = A}
 
 	E0 - ( y - x = B ∧ y = A)
-	E1 - ( x - (x + y) = B ^ (x + y) = A)
-	E2 - ( (x - y) - ( ( x - y) - y ) = B ^ (x - y) + y = A)
-	   - (x - y - x + y + y) = B ^ (x - y) + y = A
+	E1 - ( (x + y) - x = B ^ (x + y) = A)
+	E2 - ( ((x-y) + y) - (x-y) = B ^ (x - y) + y = A)
+	   - ( x - y + y - x + y ) = B ^ (x - y) + y = A
 	{Arirtmetica}
 		y = B ^ x = A
 
