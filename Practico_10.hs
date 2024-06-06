@@ -178,13 +178,62 @@ wp.S2(if).Q
 
 	{(( x >= y ) ∨ ( x <= y) ) ∧ ((x >= y) -> wp.S00(x := x + 1).Q{x ≥ 0 ∧ y ≥ 0}) ∧ ((x >= y) -> wp.S01(y := y - x).Q{x ≥ 0 ∧ y ≥ 0})}
 
+1.
+
+( x >= y ) ∨ ( x <= y)
+
+=
+	True
+
+2.
+
+((x >= y) -> wp.S00(x := x + 1).Q{x ≥ 0 ∧ y ≥ 0})
+
+={Sustitucion}
+	
+	(x >= y) -> x+1 >= 0 ^ y >=0
+
+=
+
+	x >= -1 ^  y >= 0
+
+3.S01.
+
+(x >= y) -> wp.S01(y := y - x).Q{x ≥ 0 ∧ y ≥ 0}
+
+={Sustitucion}
+
+	(x >= y) -> x >= 0 ^ y - x >=0
+=
+
+	x >= 0 ^ y >= x
 
 
+Paso Conjuntivo
 
+{(( x >= y ) ∨ ( x <= y) ) ∧ ((x >= y) -> wp.S00(x := x + 1).Q{x ≥ 0 ∧ y ≥ 0}) ∧ ((x >= y) -> wp.S01(y := y - x).Q{x ≥ 0 ∧ y ≥ 0})}
 
+={Tercero Excluido}
 
+	True ^ (x >= 0 ^ y >= x) ^ (x >= -1 ^  y >= 0)
 
+={Absorsion}
 
+	(x >= 0 ^ y >= x) ^ (x >= -1 ^  y >= 0)
+
+S1-
+
+	True -> wp.S1.(wp.S2.Q)
+=
+	True -> wp .(x, y := y * y, x * x).((x >= 0 ^ y >= x) ^ (x >= -1 ^  y >= 0))
+=
+	(y² >= 0 ^ x² >= y²) ^ (y² >= -1 ^ x² >= 0)
+=
+	True
+
+	True -> True
+=
+	True
 
 
 
