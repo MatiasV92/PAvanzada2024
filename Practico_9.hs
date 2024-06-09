@@ -6,7 +6,9 @@ f.xs:[a] -> [a]
 
 (xs ++ ys) ++ zs = xs ++ (ys ++ zs)
 
-Parto de (xs ++ ys) ++ zs
+Parto de 
+	
+	(xs ++ ys) ++ zs
 
 ={Def ++}
 
@@ -531,8 +533,6 @@ or
 
 Sum xs = <Sumatoria i : 0 =< i < #xs : xs.i>
 
-
-
 Prom xs = (sum xs, long xs) --HI--
 Caso Base xs = []
 
@@ -569,19 +569,8 @@ Hasell
 
 promTupla :: [Int] -> (Int, Int)
 promTupla [] = (0, 0)
-promTupla (x:xs) = (x+a , 1+b)
+promTupla (x:xs) = (x+a, 1+b)
 					where (a,b) = promTupla xs
-
-
-
-
-
-
-
-
-
-
-
 
 
 
