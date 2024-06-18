@@ -364,7 +364,7 @@ Caso Base (x:xs)
 
 --Ej7
 
-Escificacion
+Especificacion
 
 fx.xs = {Existe i : 0 =< i < #xs : sum.xs - xs.i = xs.i}
 
@@ -374,7 +374,7 @@ fx.xs = {Existe i : 0 =< i < #[] : sum.[] - [].i = [].i}
 
 = {Rango Vacio}
 
-False
+True
 
 HI = {Existe i : 0 =< i < #xs : sum.xs - xs.i = xs.i}
 Caso Inducivo (x:xs)
